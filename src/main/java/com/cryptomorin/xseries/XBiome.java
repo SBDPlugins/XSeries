@@ -38,11 +38,11 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * <b>XBiome</b> - Cross-version support for biome names.<br>
- * Biomes: https://minecraft.gamepedia.com/Biome
+ * Biomes: https://minecraft.wiki/w/Biome
  * Biome: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/block/Biome.html
  * <p>
  * The ordering of this enum class matters and should not be changed due to
- * <a href="https://minecraft.fandom.com/wiki/Java_Edition_1.18">1.18 removed biomes issue.</a>
+ * <a href="https://minecraft.wiki/w/Java_Edition_1.18">1.18 removed biomes issue.</a>
  *
  * @author Crypto Morin
  * @version 6.1.1
@@ -255,6 +255,36 @@ public enum XBiome {
     public static XBiome matchXBiome(@Nonnull Biome biome) {
         Objects.requireNonNull(biome, "Cannot match XBiome of a null biome");
         return Objects.requireNonNull(Data.NAMES.get(biome.name()), () -> "Unsupported biome: " + biome.name());
+    }
+
+    /**
+     * Checks if this biome is supported in the current Minecraft version.
+     * <p>
+     * An invocation of this method yields exactly the same result as the expression:
+     * <p>
+     * <blockquote>
+     * {@link #getBiome()} != null
+     * </blockquote>
+     *
+     * @return true if the current version has this biome, otherwise false.
+     */
+    public boolean isSupported() {
+        return this.biome != null;
+    }
+
+    /**
+     * Checks if this biome is supported in the current version and
+     * returns itself if yes.
+     * <p>
+     * In the other case, the alternate biome will get returned,
+     * no matter if it is supported or not.
+     *
+     * @param alternateBiome the biome to get if this one is not supported.
+     * @return this biome or the {@code alternateBiome} if not supported.
+     */
+    @Nullable
+    public XBiome or(@Nullable XBiome alternateBiome) {
+        return isSupported() ? this : alternateBiome;
     }
 
     /**

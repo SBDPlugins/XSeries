@@ -61,7 +61,7 @@ import java.util.*;
  */
 public final class XEntity {
     /**
-     * A list of entity types that are considered <a href="https://minecraft.gamepedia.com/Undead">undead</a>.
+     * A list of entity types that are considered <a href="https://minecraft.wiki/w/Undead">undead</a>.
      *
      * @since 2.0.0
      */
@@ -99,7 +99,7 @@ public final class XEntity {
     }
 
     /**
-     * Checks if an entity is an <a href="https://minecraft.gamepedia.com/Undead">undead</a>.
+     * Checks if an entity is an <a href="https://minecraft.wiki/w/Undead">undead</a>.
      *
      * @param type the entity type.
      * @return true if the entity is an undead.
@@ -206,41 +206,54 @@ public final class XEntity {
             ConfigurationSection equip = config.getConfigurationSection("equipment");
             if (equip != null) {
                 EntityEquipment equipment = living.getEquipment();
+                boolean isMob = entity instanceof Mob;
 
                 ConfigurationSection helmet = equip.getConfigurationSection("helmet");
                 if (helmet != null) {
                     equipment.setHelmet(XItemStack.deserialize(helmet.getConfigurationSection("item")));
-                    equipment.setHelmetDropChance(helmet.getInt("drop-chance"));
+                    if (isMob) {
+                        equipment.setHelmetDropChance(helmet.getInt("drop-chance"));
+                    }
                 }
 
                 ConfigurationSection chestplate = equip.getConfigurationSection("chestplate");
                 if (chestplate != null) {
                     equipment.setChestplate(XItemStack.deserialize(chestplate.getConfigurationSection("item")));
-                    equipment.setChestplateDropChance(chestplate.getInt("drop-chance"));
+                    if (isMob) {
+                        equipment.setChestplateDropChance(chestplate.getInt("drop-chance"));
+                    }
                 }
 
                 ConfigurationSection leggings = equip.getConfigurationSection("leggings");
                 if (leggings != null) {
                     equipment.setLeggings(XItemStack.deserialize(leggings.getConfigurationSection("item")));
-                    equipment.setLeggingsDropChance(leggings.getInt("drop-chance"));
+                    if (isMob) {
+                        equipment.setLeggingsDropChance(leggings.getInt("drop-chance"));
+                    }
                 }
 
                 ConfigurationSection boots = equip.getConfigurationSection("boots");
                 if (boots != null) {
                     equipment.setBoots(XItemStack.deserialize(boots.getConfigurationSection("item")));
-                    equipment.setBootsDropChance(boots.getInt("drop-chance"));
+                    if (isMob) {
+                        equipment.setBootsDropChance(boots.getInt("drop-chance"));
+                    }
                 }
 
                 ConfigurationSection mainHand = equip.getConfigurationSection("main-hand");
                 if (mainHand != null) {
                     equipment.setItemInMainHand(XItemStack.deserialize(mainHand.getConfigurationSection("item")));
-                    equipment.setItemInMainHandDropChance(mainHand.getInt("drop-chance"));
+                    if (isMob) {
+                        equipment.setItemInMainHandDropChance(mainHand.getInt("drop-chance"));
+                    }
                 }
 
                 ConfigurationSection offHand = equip.getConfigurationSection("off-hand");
                 if (offHand != null) {
                     equipment.setItemInOffHand(XItemStack.deserialize(offHand.getConfigurationSection("item")));
-                    equipment.setItemInOffHandDropChance(offHand.getInt("drop-chance"));
+                    if (isMob) {
+                        equipment.setItemInOffHandDropChance(offHand.getInt("drop-chance"));
+                    }
                 }
             }
 

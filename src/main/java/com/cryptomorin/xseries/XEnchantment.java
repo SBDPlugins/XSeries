@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  * <p>
  * EssentialsX Enchantment: https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/enchantments/Enchantment.java
  * Enchantment: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/enchantments/Enchantment.html
- * Enchanting: https://minecraft.gamepedia.com/Enchanting
+ * Enchanting: https://minecraft.wiki/w/Enchanting
  *
  * @author Crypto Morin
  * @version 2.3.0
@@ -292,6 +292,21 @@ public enum XEnchantment {
      */
     public boolean isSupported() {
         return enchantment != null;
+    }
+
+    /**
+     * Checks if this enchantment is supported in the current version and
+     * returns itself if yes.
+     * <p>
+     * In the other case, the alternate enchantment will get returned,
+     * no matter if it is supported or not.
+     *
+     * @param alternateEnchantment the enchantment to get if this one is not supported.
+     * @return this enchantment or the {@code alternateEnchantment} if not supported.
+     */
+    @Nullable
+    public XEnchantment or(@Nullable XEnchantment alternateEnchantment) {
+        return isSupported() ? this : alternateEnchantment;
     }
 
     /**
