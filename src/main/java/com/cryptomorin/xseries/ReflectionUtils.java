@@ -318,7 +318,7 @@ public final class ReflectionUtils {
      * @since 7.1.0
      */
     public static boolean supports(int minorNumber, int patchNumber) {
-        return MINOR_NUMBER == minorNumber ? supportsPatch(patchNumber) : supports(minorNumber);
+        return (MINOR_NUMBER == minorNumber && supportsPatch(patchNumber)) || MINOR_NUMBER > minorNumber;
     }
 
     /**
@@ -331,20 +331,6 @@ public final class ReflectionUtils {
      */
     public static boolean supportsPatch(int patchNumber) {
         return PATCH_NUMBER >= patchNumber;
-    }
-
-    /**
-     * Checks whether the server version is equal or greater than the given version.
-     * If minorNumber matches, it will check if patchNumber is equal or greater,
-     * if minorNumber does not match, it will check if minorNumber is greater.
-     * 
-     * @param minorNumber the minor version to compare the server version with.
-     * @param patchNumber the patch version to compare the server version with.
-     * @see #MINOR_NUMBER
-     * @see #PATCH_NUMBER
-     */
-    public static boolean supports(int minorNumber, int patchNumber) {
-        return (MINOR_NUMBER == minorNumber && supportsPatch(patchNumber)) || MINOR_NUMBER > minorNumber;
     }
 
     /**
